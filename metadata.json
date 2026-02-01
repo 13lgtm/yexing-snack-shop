@@ -1,0 +1,8 @@
+
+{
+  "name": "Yexing Snack Shop",
+  "description": "A premium snack ordering application featuring traditional Cantonese snacks with a modern UI and seamless checkout experience.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
