@@ -24,7 +24,7 @@ export const api = {
         if (error) throw error;
 
         // Map DB response to frontend Product type
-        return data.map((item: any) => ({
+        const allProducts = data.map((item: any) => ({
             id: item.id,
             name: item.name,
             price: item.price,
@@ -37,8 +37,15 @@ export const api = {
             reviews: item.reviews_count,
             time: item.time_estimate,
             calories: item.calories,
-            ingredients: item.ingredients || []
+            ingredients: item.ingredients || [],
+            // 新增字段
+            stock: item.stock,
+            unit: item.unit,
+            status: item.status
         })) as Product[];
+
+        // 只返回上架的商品（状态为active或无状态）
+        return allProducts.filter(p => !p.status || p.status === 'active');
     },
 
     // Fetch all categories

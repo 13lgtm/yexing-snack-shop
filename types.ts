@@ -13,6 +13,10 @@ export interface Product {
   time: string;
   calories: string;
   ingredients: { emoji: string; name: string }[];
+  // 后台管理新增字段
+  stock?: number;
+  unit?: string;
+  status?: 'active' | 'sold_out';
 }
 
 export interface CartItem extends Product {

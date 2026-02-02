@@ -121,6 +121,8 @@ const OrderHistory: React.FC = () => {
                                             <span className="w-1 h-1 bg-primary rounded-full mr-1.5 animate-pulse"></span>
                                             制作中
                                         </span>
+                                    ) : order.status === 'cancelled' ? (
+                                        <span className="bg-gray-100 text-gray-500 text-[10px] px-2 py-1 rounded-full font-bold line-through">已取消</span>
                                     ) : (
                                         <span className="text-gray-400 text-[10px] px-2 py-1 font-bold italic">已完成</span>
                                     )}
@@ -145,6 +147,13 @@ const OrderHistory: React.FC = () => {
                                             className="bg-primary hover:bg-red-700 text-white text-xs font-bold px-5 py-2 rounded-full shadow-lg transition-all active:scale-90"
                                         >
                                             追踪详情
+                                        </button>
+                                    ) : order.status === 'cancelled' ? (
+                                        <button
+                                            onClick={() => handleReorder(order.items)}
+                                            className="bg-gray-100 text-gray-500 text-xs font-bold px-5 py-2 rounded-full transition-all active:scale-90"
+                                        >
+                                            重新下单
                                         </button>
                                     ) : (
                                         <button

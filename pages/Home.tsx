@@ -12,7 +12,7 @@ const Home: React.FC = () => {
     // State for products and categories from API
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<{ id: string; name: string; icon: string }[]>([]);
-    const [activeCategory, setActiveCategory] = useState('1');
+    const [activeCategory, setActiveCategory] = useState('snacks'); // 默认为'snacks'
     const [showToast, setShowToast] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -30,6 +30,11 @@ const Home: React.FC = () => {
                 ]);
                 setProducts(productsData);
                 setCategories(categoriesData);
+
+                // 设置默认分类为第一个分类（如果有的话）
+                if (categoriesData.length > 0 && !activeCategory) {
+                    setActiveCategory(categoriesData[0].id);
+                }
             } catch (err) {
                 console.error('Failed to load data:', err);
                 setError('加载数据失败，请检查网络连接');
@@ -205,7 +210,14 @@ const Home: React.FC = () => {
                                                             <p className="text-[9px] text-gray-400 mb-2 line-clamp-2 leading-tight h-6">{product.description}</p>
                                                         </div>
                                                         <div className="flex justify-between items-center mt-2">
-                                                            <span className="text-primary font-bold text-base">¥{product.price}</span>
+                                                            <div>
+                                                                <span className="text-primary font-bold text-base">¥{product.price}</span>
+                                                                {product.stock !== undefined && product.stock < 20 && product.stock > 0 && (
+                                                                    <div className="text-[9px] text-orange-500 mt-0.5">
+                                                                        仅剩 {product.stock} {product.unit || '份'}
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                             <button
                                                                 onClick={(e) => handleAddToCart(e, product)}
                                                                 className="bg-primary text-white w-6 h-6 rounded-lg flex items-center justify-center shadow-md active:scale-90 transition-transform"
